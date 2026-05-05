@@ -1,0 +1,12 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.rsuser
+
+# Test output
+TestResults/
