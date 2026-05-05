@@ -8,6 +8,25 @@ This file stores backup copies of repo-specific AI memory instructions for afodo
 - Prefer the most efficient implementations that follow .NET console app best practices.
 - Keep repository-specific memories local to this repo; do not copy them to ai_memories unless explicitly requested.
 
+## Project Context
+
+### Assessment Requirements
+
+- .NET 9/10 console app
+- Read all Excel files from a folder; 3 example files are in data/
+- Per file: output filename + each subrecipient name under "G. Other Direct Costs"
+- Final output: distinct subrecipient list with total subaward amounts across all files, human-readable
+- Handle 0 to unknown subaward rows per file
+- At least one unit test confirming SubawardBudgetExample1.xlsx has: Indiana, Mayo, Purdue, Florida
+- Must run as-is from public GitHub with no modifications
+- README must document assumptions and questions
+
+### Spreadsheet Structure (confirmed)
+
+- Subaward rows: column A starts with `Subaward:  {Name}`, amount is on the same row in the Total column
+- `Exempt Subaward Costs (>$25k)` rows below each subaward are separate cost lines — ignore them
+- No need to locate the "G. Other Direct Costs" header; matching on `Subaward:` prefix is sufficient
+
 ## Memory Log
 
 ### 2026-05-05
