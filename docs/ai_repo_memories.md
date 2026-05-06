@@ -7,6 +7,10 @@ This file stores backup copies of repo-specific AI memory instructions for afodo
 - Comment code clearly for maintainability without over-commenting.
 - Prefer the most efficient implementations that follow .NET console app best practices.
 - Keep repository-specific memories local to this repo; do not copy them to ai_memories unless explicitly requested.
+- Project baseline: .NET 10 (C#), solution file is `SubawardReader.slnx`.
+- Gate tracking convention: when a gate is done, mark checklist and exit criteria complete, then add `Gate status: Completed` and `Completed at` timestamp.
+- Keep schedule data in `docs/implementation-plans/implementation-timeline.md` and execution details in `docs/implementation-plans/implementation-plan.md`.
+- Gate 1 is completed and verified (`dotnet restore` and `dotnet build` succeeded).
 
 ## Project Context
 
