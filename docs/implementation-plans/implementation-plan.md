@@ -47,14 +47,17 @@ Goal: Establish testable boundaries before implementation details.
 
 Checklist:
 
-- [ ] Define extracted row model (`FileName`, `RecipientName`, `Amount`).
-- [ ] Define summary row model (`RecipientName`, `TotalAmount`).
-- [ ] Define parser service interface and implementation boundary.
-- [ ] Keep console output formatting separate from parsing/aggregation logic.
+- [x] Define extracted row model (`FileName`, `RecipientName`, `Amount`).
+- [x] Define summary row model (`RecipientName`, `TotalAmount`).
+- [x] Define parser service interface and implementation boundary.
+- [x] Keep console output formatting separate from parsing/aggregation logic.
 
 Exit criteria:
 
-- [ ] Ensure core types and interfaces are in place and compile.
+- [x] Ensure core types and interfaces are in place and compile.
+
+Gate status: Completed
+Completed at: 2026-05-06 10:46 (UTC-05:00)
 
 ## Gate 3: Parsing Implementation
 
