@@ -4,13 +4,14 @@ This file stores backup copies of repo-specific AI memory instructions for afodo
 
 ## Active Rules
 
-- Comment code clearly for maintainability without over-commenting.
+- Comment code clearly for maintainability without over-commenting. Skip comments on well-known conventions (exit codes, standard API calls); only comment where intent isn't obvious from structure alone.
 - Prefer the most efficient implementations that follow .NET console app best practices.
+- `WriteError(string message)` in `Program.cs` is the established helper for all red console error output; use it for all future error cases rather than writing directly to `Console.Error`.
 - Keep repository-specific memories local to this repo; do not copy them to ai_memories unless explicitly requested.
 - Project baseline: .NET 10 (C#), solution file is `SubawardReader.slnx`.
 - Gate tracking convention: when a gate is done, mark checklist and exit criteria complete, then add `Gate status: Completed` and `Completed at` timestamp.
 - Keep schedule data in `docs/implementation-plans/implementation-timeline.md` and execution details in `docs/implementation-plans/implementation-plan.md`.
-- Gate 1 is completed and verified (`dotnet restore` and `dotnet build` succeeded).
+- Gates 1 and 2 are complete. Models, interface, and parser stub are in place under `SubawardReader/Models/` and `SubawardReader/Parsing/`.
 
 ## Project Context
 
