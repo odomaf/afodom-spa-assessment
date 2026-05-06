@@ -34,6 +34,62 @@ public class SubawardParserTests
     }
 
     [Fact]
+    public void Parse_WithTrimmedAndCaseInsensitiveAnchor_ThrowsNotImplementedException()
+    {
+        string filePath = CreateTempWorkbook(path =>
+        {
+            using var workbook = new XLWorkbook();
+            var sheet = workbook.AddWorksheet("Budget");
+
+            sheet.Cell(10, 1).Value = "Header Col A";
+            sheet.Cell(10, 5).Value = "Total";
+            sheet.Cell(11, 1).Value = " A. ";
+            sheet.Cell(11, 2).Value = " senior personnel ";
+
+            workbook.SaveAs(path);
+        });
+
+        try
+        {
+            var parser = new SubawardParser();
+
+            Assert.Throws<NotImplementedException>(() => parser.Parse(filePath).ToList());
+        }
+        finally
+        {
+            File.Delete(filePath);
+        }
+    }
+
+    [Fact]
+    public void Parse_WithCaseInsensitiveTotalHeader_ThrowsNotImplementedException()
+    {
+        string filePath = CreateTempWorkbook(path =>
+        {
+            using var workbook = new XLWorkbook();
+            var sheet = workbook.AddWorksheet("Budget");
+
+            sheet.Cell(10, 1).Value = "Header Col A";
+            sheet.Cell(10, 5).Value = "PROJECT TOTAL";
+            sheet.Cell(11, 1).Value = "A.";
+            sheet.Cell(11, 2).Value = "Senior Personnel";
+
+            workbook.SaveAs(path);
+        });
+
+        try
+        {
+            var parser = new SubawardParser();
+
+            Assert.Throws<NotImplementedException>(() => parser.Parse(filePath).ToList());
+        }
+        finally
+        {
+            File.Delete(filePath);
+        }
+    }
+
+    [Fact]
     public void Parse_WithoutAnchorRow_ThrowsInvalidOperationException()
     {
         string filePath = CreateTempWorkbook(path =>
