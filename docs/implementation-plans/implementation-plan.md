@@ -2,18 +2,23 @@
 
 This plan uses go/no-go phase gates so I can review and approve progress before the next phase starts.
 
+Timeline details are maintained in `docs/implementation-plans/implementation-timeline.md`.
+
 ## Gate 0: Scope Lock
 
 Goal: Verify scope decisions are locked and team alignment confirmed.
 
 Checklist:
 
-- [ ] questions-and-assumptions.md is complete and signed off.
-- [ ] All implementation constraints confirmed.
+- [x] questions-and-assumptions.md is complete and signed off.
+- [x] All implementation constraints confirmed.
 
 Exit criteria:
 
-- [ ] Decisions documented, scope locked, ready to scaffold.
+- [x] Decisions documented, scope locked, ready to scaffold.
+
+Gate status: Completed
+Completed at: 2026-05-05 15:53 (UTC-05:00)
 
 ## Gate 1: Solution Scaffolding
 
@@ -21,17 +26,20 @@ Goal: Create the project structure and dependencies.
 
 Checklist:
 
-- [ ] Create solution file (`.sln` or `.slnx`).
-- [ ] Create console app project.
-- [ ] Create test project.
-- [ ] Add both projects to the solution.
-- [ ] Add Excel parsing package (recommended: `ClosedXML`).
-- [ ] Add test dependencies (`xUnit`, runner, assertions as needed).
+- [x] Create solution file (`.sln` or `.slnx`).
+- [x] Create console app project.
+- [x] Create test project.
+- [x] Add both projects to the solution.
+- [x] Add Excel parsing package (recommended: `ClosedXML`).
+- [x] Add test dependencies (`xUnit`, runner, assertions as needed).
 
 Exit criteria:
 
-- [ ] Restore the solution successfully.
-- [ ] Compile the empty app and test project.
+- [x] Restore the solution successfully.
+- [x] Compile the empty app and test project.
+
+Gate status: Completed
+Completed at: 2026-05-05 21:40 (UTC-05:00)
 
 ## Gate 2: Core Design
 

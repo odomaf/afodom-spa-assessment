@@ -64,11 +64,11 @@ Repo hygiene: commit `.gitignore` before or with scaffolding so generated files 
 
 ## Exit Criteria
 
-- [ ] Solution file created
-- [ ] Console app project created
-- [ ] Test project created
-- [ ] Both projects added to solution
-- [ ] ClosedXML package added
-- [ ] xUnit dependencies added
-- [ ] Solution restores successfully
-- [ ] All projects compile without errors
+- [x] Solution file created
+- [x] Console app project created
+- [x] Test project created
+- [x] Both projects added to solution
+- [x] ClosedXML package added
+- [x] xUnit dependencies added
+- [x] Solution restores successfully
+- [x] All projects compile without errors
