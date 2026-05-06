@@ -12,9 +12,12 @@ This file stores backup copies of repo-specific AI memory instructions for afodo
 - Gate tracking convention: when a gate is done, mark checklist and exit criteria complete, then add `Gate status: Completed` and `Completed at` timestamp.
 - Keep schedule data in `docs/implementation-plans/implementation-timeline.md` and execution details in `docs/implementation-plans/implementation-plan.md`.
 - Gates 1 and 2 are complete. Models, interface, and parser stub are in place under `SubawardReader/Models/` and `SubawardReader/Parsing/`.
-- Gate 3 is in progress: input path resolution, worksheet open, and dynamic `Total` discovery are complete.
+- Gate 3 is in progress: input path resolution, worksheet open, dynamic `Total` discovery, and parser helper refactor are complete.
 - Header row discovery convention: locate anchor row with column 1 `A.` and column 2 exact `Senior Personnel` (trimmed, case-insensitive), then use the row above as header.
-- Parser structure protections: unit tests generate temporary `.xlsx` files to validate missing anchor, false anchor, and missing `Total` failure paths.
+- Parser structure: `SubawardParser` uses private helpers `FindHeaderRowNumber`, `IsSeniorPersonnelAnchor`, and `FindTotalColumnNumber` to keep `Parse` as a thin orchestrator.
+- Parser structure protections: 6 unit tests cover missing anchor, false anchor, missing `Total`, trimmed/case-insensitive anchor, and case-insensitive Total header.
+- Coverage tooling: `SubawardReader.Tests/coverage-report.sh` runs tests with coverlet, generates HTML via ReportGenerator, and opens in Firefox.
+- Coverage config: `SubawardReader.Tests/coverage.runsettings` excludes `[SubawardReader]Program` from coverage metrics (top-level statement entry point, tested manually).
 
 ## Project Context
 
@@ -67,3 +70,15 @@ Changes:
 - Add note: Gate 3 is in progress with input path resolution, worksheet open, and dynamic `Total` discovery complete.
 - Add rule: determine header row from anchor row (`A.` + exact `Senior Personnel`) and use the row above as header.
 - Add note: parser structure behavior is guarded with temporary-workbook unit tests for missing anchor, false anchor, and missing `Total` paths.
+
+### 2026-05-06 (session 2)
+
+Reason: Capture parser refactor, expanded test coverage, and coverage tooling added this session.
+
+Changes:
+
+- Update Gate 3 progress: parser helper refactor complete.
+- Add rule: `SubawardParser` uses private helpers to keep `Parse` as thin orchestrator.
+- Update test count: 6 tests now cover all known structural edge cases including trim/case variants.
+- Add note: `coverage-report.sh` added to `SubawardReader.Tests/` for one-command HTML coverage in Firefox.
+- Add note: `coverage.runsettings` added to exclude `[SubawardReader]Program` from coverage (top-level statements generate a synthetic Main$ method).

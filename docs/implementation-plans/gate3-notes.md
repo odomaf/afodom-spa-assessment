@@ -53,6 +53,20 @@ Unit tests now cover:
 - Missing anchor row fails with anchor/header determination error
 - False anchor (`A.` with wrong column 2) fails with anchor/header determination error
 - Missing `Total` header fails with `Total` column error
+- Trimmed and case-insensitive anchor values still resolve correctly
+- Case-insensitive `Total` header (e.g. `PROJECT TOTAL`) still resolves correctly
+
+Parser refactored into private helpers to reduce method complexity:
+
+- `FindHeaderRowNumber` — locates the header row via anchor scanning
+- `IsSeniorPersonnelAnchor` — predicate that checks both anchor columns
+- `FindTotalColumnNumber` — scans header row for `Total` cell
+- `Parse` is now a thin orchestrator; all branch-heavy logic is isolated in helpers
+
+Coverage tooling added to `SubawardReader.Tests/`:
+
+- `coverage-report.sh` — runs tests, generates HTML via ReportGenerator, opens in Firefox
+- `coverage.runsettings` — excludes `[SubawardReader]Program` from metrics (top-level entry point, not unit-testable)
 
 ### Detect Subaward rows
 
