@@ -65,11 +65,11 @@ Goal: Extract subaward rows from each workbook correctly.
 
 Checklist:
 
-- [ ] Resolve input path as either directory or single file.
-- [ ] Enumerate `.xlsx` files from input directory when directory mode is used.
-- [ ] Select only the specified `.xlsx` file when file mode is used.
-- [ ] Open first worksheet per workbook.
-- [ ] Discover `Total` column dynamically by scanning headers.
+- [x] Resolve input path as either directory or single file.
+- [x] Enumerate `.xlsx` files from input directory when directory mode is used.
+- [x] Select only the specified `.xlsx` file when file mode is used.
+- [x] Open first worksheet per workbook.
+- [x] Discover `Total` column dynamically by scanning headers.
 - [ ] Detect rows where column A starts with `Subaward:`.
 - [ ] Parse recipient name from the same cell text.
 - [ ] Parse amount from the same row in the discovered `Total` column.

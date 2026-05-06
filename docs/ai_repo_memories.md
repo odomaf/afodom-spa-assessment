@@ -12,6 +12,9 @@ This file stores backup copies of repo-specific AI memory instructions for afodo
 - Gate tracking convention: when a gate is done, mark checklist and exit criteria complete, then add `Gate status: Completed` and `Completed at` timestamp.
 - Keep schedule data in `docs/implementation-plans/implementation-timeline.md` and execution details in `docs/implementation-plans/implementation-plan.md`.
 - Gates 1 and 2 are complete. Models, interface, and parser stub are in place under `SubawardReader/Models/` and `SubawardReader/Parsing/`.
+- Gate 3 is in progress: input path resolution, worksheet open, and dynamic `Total` discovery are complete.
+- Header row discovery convention: locate anchor row with column 1 `A.` and column 2 exact `Senior Personnel` (trimmed, case-insensitive), then use the row above as header.
+- Parser structure protections: unit tests generate temporary `.xlsx` files to validate missing anchor, false anchor, and missing `Total` failure paths.
 
 ## Project Context
 
@@ -54,3 +57,13 @@ Changes:
 - Add rule: gate completion convention — mark checklist, add `Gate status: Completed` and `Completed at` timestamp.
 - Add rule: keep schedule in implementation-timeline.md and execution details in implementation-plan.md.
 - Add note: Gate 1 is completed and verified (`dotnet restore` and `dotnet build` succeeded).
+
+### 2026-05-06
+
+Reason: Capture Gate 3 parsing-structure decisions and protections after completing worksheet/header discovery steps.
+
+Changes:
+
+- Add note: Gate 3 is in progress with input path resolution, worksheet open, and dynamic `Total` discovery complete.
+- Add rule: determine header row from anchor row (`A.` + exact `Senior Personnel`) and use the row above as header.
+- Add note: parser structure behavior is guarded with temporary-workbook unit tests for missing anchor, false anchor, and missing `Total` paths.

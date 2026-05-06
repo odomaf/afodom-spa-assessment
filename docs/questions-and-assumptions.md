@@ -39,5 +39,10 @@ A (assumption): Only `.xlsx` files are processed. Other file types are silently 
 
 ---
 
+**Q: Which row is the header row containing column labels like "Total"?**
+A (assumption): The header row is not at a fixed row number and varies across files. I locate it by scanning column 1 for a cell with the value `"A."`, confirmed by `"Senior Personnel"` in column 2 of the same row. The header row is the row immediately above that anchor row. This two-column match is used to minimize false positives, since `"A."` alone could appear elsewhere in the spreadsheet.
+
+---
+
 **Q: Must input be a directory path, or can it be a single file?**
 A (assumption): Accept both. If input is a directory, process all `.xlsx` files in it. If input is a single `.xlsx` file, process only that file. For non-.xlsx files, return a clear error and exit.

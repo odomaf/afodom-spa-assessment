@@ -7,8 +7,8 @@ Goal: Extract subaward rows from each workbook correctly.
 - [x] Resolve input path as either directory or single file
 - [x] Enumerate `.xlsx` files from input directory when directory mode is used
 - [x] Select only the specified `.xlsx` file when file mode is used
-- [ ] Open first worksheet per workbook
-- [ ] Discover `Total` column dynamically by scanning headers
+- [x] Open first worksheet per workbook
+- [x] Discover `Total` column dynamically by scanning headers
 - [ ] Detect rows where column A starts with `Subaward:`
 - [ ] Parse recipient name from the same cell text
 - [ ] Parse amount from the same row in the discovered `Total` column
@@ -35,7 +35,24 @@ Implemented as part of path resolution above — single-file mode wraps the vali
 
 ### Open first worksheet
 
+Parser now opens each workbook with `XLWorkbook(filePath)` and selects the first worksheet with `workbook.Worksheets.First()`.
+
 ### Discover Total column
+
+Header row is discovered structurally, not by fixed row number:
+
+- Find an anchor row where column 1 is exactly `A.` and column 2 is exactly `Senior Personnel` (trimmed, case-insensitive)
+- Treat the row immediately above that anchor as the header row
+- Scan that header row for a cell containing `Total` (case-insensitive)
+
+If either anchor row or `Total` column is missing, parser throws a clear `InvalidOperationException` with file-specific context.
+
+Unit tests now cover:
+
+- Expected structure reaches current `NotImplementedException` boundary
+- Missing anchor row fails with anchor/header determination error
+- False anchor (`A.` with wrong column 2) fails with anchor/header determination error
+- Missing `Total` header fails with `Total` column error
 
 ### Detect Subaward rows
 
