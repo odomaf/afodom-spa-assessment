@@ -42,3 +42,14 @@ Changes:
 - Add `Active Rules` section for current source of truth.
 - Add `Memory Log` section for dated change tracking.
 - Preserve existing repo-specific instruction entries.
+
+### 2026-05-05 (end of session)
+
+Reason: Record Gate 1 completion and planning document conventions established tonight.
+
+Changes:
+
+- Add rule: project baseline is .NET 10 (C#), solution file is `SubawardReader.slnx`.
+- Add rule: gate completion convention — mark checklist, add `Gate status: Completed` and `Completed at` timestamp.
+- Add rule: keep schedule in implementation-timeline.md and execution details in implementation-plan.md.
+- Add note: Gate 1 is completed and verified (`dotnet restore` and `dotnet build` succeeded).
