@@ -18,6 +18,7 @@ This file stores backup copies of repo-specific AI memory instructions for afodo
 - Parser structure protections: 6 unit tests cover missing anchor, false anchor, missing `Total`, trimmed/case-insensitive anchor, and case-insensitive Total header.
 - Coverage tooling: `SubawardReader.Tests/coverage-report.sh` runs tests with coverlet, generates HTML via ReportGenerator, and opens in Firefox.
 - Coverage config: `SubawardReader.Tests/coverage.runsettings` excludes `[SubawardReader]Program` from coverage metrics (top-level statement entry point, tested manually).
+- Parser design rule: as Gate 3 row-iteration logic is added, keep `Parse` as a thin orchestrator — extract helpers rather than accumulating inline logic.
 
 ## Project Context
 
@@ -82,3 +83,11 @@ Changes:
 - Update test count: 6 tests now cover all known structural edge cases including trim/case variants.
 - Add note: `coverage-report.sh` added to `SubawardReader.Tests/` for one-command HTML coverage in Firefox.
 - Add note: `coverage.runsettings` added to exclude `[SubawardReader]Program` from coverage (top-level statements generate a synthetic Main$ method).
+
+### 2026-05-06 (session 3)
+
+Reason: Capture parser design rule surfaced during Interview Lens review.
+
+Changes:
+
+- Add rule: keep `Parse` as a thin orchestrator as Gate 3 row-iteration logic is added; extract helpers rather than accumulating inline logic.
