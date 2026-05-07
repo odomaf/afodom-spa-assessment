@@ -82,9 +82,9 @@ Exit criteria:
 Gate status: Completed
 Completed at: 2026-05-06 20:15 (UTC-05:00)
 
-## Gate 4: Aggregation and Ordering
+## Gate 4: Subaward Row Extraction and Ordering
 
-Goal: Produce a list of all subaward rows as found, with deterministic ordering (no aggregation by recipient).
+Goal: Extract and list each subaward row exactly as found in the source files, with deterministic ordering (no aggregation by recipient).
 
 Checklist:
 

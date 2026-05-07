@@ -1,8 +1,8 @@
-# Gate 4: Aggregation and Ordering
+# Gate 4: Subaward Row Extraction and Ordering
 
 > **Note:** For all technical and user-facing assumptions, see `questions-and-assumptions.md` (canonical source of truth).
 
-Goal: Produce a list of all subaward rows as found, with deterministic ordering (no aggregation by recipient).
+Goal: Extract and list each subaward row exactly as found in the source files, with deterministic ordering (no aggregation by recipient).
 
 ## Checklist
 

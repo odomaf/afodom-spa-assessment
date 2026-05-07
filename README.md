@@ -19,7 +19,7 @@ dotnet build
 
 - Result: restore and build succeeded
 
-## Gate 4: Aggregation and Ordering (2026-05-07)
+## Gate 4: Subaward Row Extraction and Ordering (2026-05-07)
 
 > **Note:** For all technical and user-facing assumptions, see `docs/questions-and-assumptions.md` (canonical source of truth).
 
