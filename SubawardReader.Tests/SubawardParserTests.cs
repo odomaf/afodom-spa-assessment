@@ -6,7 +6,25 @@ namespace SubawardReader.Tests;
 public class SubawardParserTests
 {
     [Fact]
-    public void Parse_WithExpectedStructure_ThrowsNotImplementedException()
+    public void Parse_WithExampleWorkbook_ReturnsExpectedSubawardRows()
+    {
+        string repoRoot = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", ".."));
+        string workbookPath = Path.Combine(repoRoot, "data", "SubawardBudgetExample1.xlsx");
+
+        var parser = new SubawardParser();
+
+        var rows = parser.Parse(workbookPath).ToList();
+        var recipients = rows.Select(row => row.RecipientName).ToList();
+
+        Assert.Equal("SubawardBudgetExample1.xlsx", rows.First().FileName);
+        Assert.Contains("Indiana", recipients);
+        Assert.Contains("Mayo", recipients);
+        Assert.Contains("Purdue", recipients);
+        Assert.Contains("Florida", recipients);
+    }
+
+    [Fact]
+    public void Parse_WithExpectedStructure_ReturnsEmptyList()
     {
         string filePath = CreateTempWorkbook(path =>
         {
@@ -25,7 +43,8 @@ public class SubawardParserTests
         {
             var parser = new SubawardParser();
 
-            Assert.Throws<NotImplementedException>(() => parser.Parse(filePath).ToList());
+            var rows = parser.Parse(filePath).ToList();
+            Assert.Empty(rows);
         }
         finally
         {
@@ -34,7 +53,7 @@ public class SubawardParserTests
     }
 
     [Fact]
-    public void Parse_WithTrimmedAndCaseInsensitiveAnchor_ThrowsNotImplementedException()
+    public void Parse_WithTrimmedAndCaseInsensitiveAnchor_ReturnsEmptyList()
     {
         string filePath = CreateTempWorkbook(path =>
         {
@@ -53,7 +72,8 @@ public class SubawardParserTests
         {
             var parser = new SubawardParser();
 
-            Assert.Throws<NotImplementedException>(() => parser.Parse(filePath).ToList());
+            var rows = parser.Parse(filePath).ToList();
+            Assert.Empty(rows);
         }
         finally
         {
@@ -62,7 +82,7 @@ public class SubawardParserTests
     }
 
     [Fact]
-    public void Parse_WithCaseInsensitiveTotalHeader_ThrowsNotImplementedException()
+    public void Parse_WithCaseInsensitiveTotalHeader_ReturnsEmptyList()
     {
         string filePath = CreateTempWorkbook(path =>
         {
@@ -81,7 +101,8 @@ public class SubawardParserTests
         {
             var parser = new SubawardParser();
 
-            Assert.Throws<NotImplementedException>(() => parser.Parse(filePath).ToList());
+            var rows = parser.Parse(filePath).ToList();
+            Assert.Empty(rows);
         }
         finally
         {

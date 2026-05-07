@@ -12,9 +12,55 @@ public class SubawardParser : ISubawardParser
         int headerRowNumber = FindHeaderRowNumber(worksheet, filePath);
         int totalColumnNumber = FindTotalColumnNumber(worksheet, headerRowNumber, filePath);
 
-        _ = totalColumnNumber;
+        var rows = ExtractSubawardRows(worksheet, headerRowNumber, totalColumnNumber, filePath).ToList();
+        return rows;
+    }
 
-        throw new NotImplementedException();
+    private static IEnumerable<SubawardRow> ExtractSubawardRows(IXLWorksheet worksheet, int headerRowNumber, int totalColumnNumber, string filePath)
+    {
+        string fileName = Path.GetFileName(filePath);
+        int gSectionRowNumber = FindGSectionRowNumber(worksheet);
+
+        // Column B: subaward marker labels
+        foreach (var cell in worksheet.Column(2).CellsUsed())
+        {
+            if (cell.Address.RowNumber <= headerRowNumber)
+                continue;
+
+            if (cell.Address.RowNumber < gSectionRowNumber)
+                continue;
+
+            string cellText = cell.GetString();
+            if (!cellText.StartsWith("Subaward:", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            // Column C: recipient name
+            string recipientName = worksheet.Cell(cell.Address.RowNumber, 3).GetString().Trim();
+            if (string.IsNullOrWhiteSpace(recipientName))
+                continue;
+
+            decimal amount = worksheet.Cell(cell.Address.RowNumber, totalColumnNumber).GetValue<decimal>();
+
+            yield return new SubawardRow(fileName, recipientName, amount);
+        }
+    }
+
+    private static int FindGSectionRowNumber(IXLWorksheet worksheet)
+    {
+        foreach (var cell in worksheet.Column(1).CellsUsed())
+        {
+            if (cell.GetString().Trim() == "G." &&
+                string.Equals(
+                    worksheet.Cell(cell.Address.RowNumber, 2).GetString().Trim(),
+                    "Other Direct Costs",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                return cell.Address.RowNumber;
+            }
+        }
+
+        // No G. anchor found; skip section filtering
+        return 0;
     }
 
     private static int FindHeaderRowNumber(IXLWorksheet worksheet, string filePath)
@@ -23,6 +69,7 @@ public class SubawardParser : ISubawardParser
         {
             if (IsSeniorPersonnelAnchor(worksheet, cell))
             {
+                // Header row is the row immediately above the anchor
                 return cell.Address.RowNumber - 1;
             }
         }
