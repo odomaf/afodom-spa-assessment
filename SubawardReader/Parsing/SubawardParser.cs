@@ -5,18 +5,23 @@ namespace SubawardReader.Parsing;
 
 public class SubawardParser : ISubawardParser
 {
+
     public IEnumerable<SubawardRow> Parse(string filePath)
     {
         using var workbook = new XLWorkbook(filePath);
         var worksheet = workbook.Worksheets.First();
         int headerRowNumber = FindHeaderRowNumber(worksheet, filePath);
-        int totalColumnNumber = FindTotalColumnNumber(worksheet, headerRowNumber, filePath);
+        var totalColumns = FindTotalColumnNumbers(worksheet, headerRowNumber, filePath);
 
-        var rows = ExtractSubawardRows(worksheet, headerRowNumber, totalColumnNumber, filePath).ToList();
+        var rows = ExtractSubawardRows(worksheet, headerRowNumber, totalColumns, filePath).ToList();
         return rows;
     }
 
-    private static IEnumerable<SubawardRow> ExtractSubawardRows(IXLWorksheet worksheet, int headerRowNumber, int totalColumnNumber, string filePath)
+    private static IEnumerable<SubawardRow> ExtractSubawardRows(
+        IXLWorksheet worksheet,
+        int headerRowNumber,
+        Dictionary<int, string> totalColumns,
+        string filePath)
     {
         string fileName = Path.GetFileName(filePath);
         int gSectionRowNumber = FindGSectionRowNumber(worksheet);
@@ -34,14 +39,35 @@ public class SubawardParser : ISubawardParser
             if (!cellText.StartsWith("Subaward:", StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            // Column C: recipient name
-            string recipientName = worksheet.Cell(cell.Address.RowNumber, 3).GetString().Trim();
+
+            // Try to extract recipient from the same cell as 'Subaward:'
+            string recipientName = cell.GetString().Substring("Subaward:".Length).Trim();
+            // If not present, fall back to adjacent cell (column C)
+            if (string.IsNullOrWhiteSpace(recipientName))
+            {
+                recipientName = worksheet.Cell(cell.Address.RowNumber, 3).GetString().Trim();
+            }
             if (string.IsNullOrWhiteSpace(recipientName))
                 continue;
 
-            decimal amount = worksheet.Cell(cell.Address.RowNumber, totalColumnNumber).GetValue<decimal>();
+            var amounts = new Dictionary<string, decimal>();
+            foreach (var kvp in totalColumns)
+            {
+                int col = kvp.Key;
+                string heading = kvp.Value;
+                decimal value = 0;
+                var amountCell = worksheet.Cell(cell.Address.RowNumber, col);
+                if (amountCell.DataType == XLDataType.Number || decimal.TryParse(amountCell.GetString(), out value))
+                {
+                    value = amountCell.GetValue<decimal>();
+                    amounts[heading] = value;
+                }
+            }
 
-            yield return new SubawardRow(fileName, recipientName, amount);
+            if (amounts.Count == 0)
+                continue;
+
+            yield return new SubawardRow(fileName, recipientName, amounts);
         }
     }
 
@@ -86,18 +112,32 @@ public class SubawardParser : ISubawardParser
                    StringComparison.OrdinalIgnoreCase);
     }
 
-    private static int FindTotalColumnNumber(IXLWorksheet worksheet, int headerRowNumber, string filePath)
-    {
-        var headerRow = worksheet.Row(headerRowNumber);
 
-        foreach (var cell in headerRow.CellsUsed())
+    // Returns a dictionary: column index -> header text (e.g., 'Total', 'Sponsor Share', etc.)
+    private static Dictionary<int, string> FindTotalColumnNumbers(IXLWorksheet worksheet, int headerRowNumber, string filePath)
+    {
+        var totalColumns = new Dictionary<int, string>();
+
+        // Check both the row directly above the anchor and the row above that
+        for (int offset = 0; offset <= 1; offset++)
         {
-            if (cell.GetString().Contains("Total", StringComparison.OrdinalIgnoreCase))
+            int rowNum = headerRowNumber - offset;
+            if (rowNum < 1) continue;
+            var row = worksheet.Row(rowNum);
+            foreach (var cell in row.CellsUsed())
             {
-                return cell.Address.ColumnNumber;
+                if (cell.GetString().Contains("Total", StringComparison.OrdinalIgnoreCase))
+                {
+                    totalColumns[cell.Address.ColumnNumber] = cell.GetString();
+                }
             }
         }
 
-        throw new InvalidOperationException($"No 'Total' column found in header row of '{filePath}'.");
+        if (totalColumns.Count == 0)
+        {
+            throw new InvalidOperationException($"No 'Total' column found in the two header rows above the anchor in '{filePath}'.");
+        }
+
+        return totalColumns;
     }
 }
