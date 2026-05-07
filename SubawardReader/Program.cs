@@ -40,81 +40,61 @@ else
 }
 
 
-var parser = new SubawardReader.Parsing.SubawardParser();
-
-
-
 foreach (var filePath in filePaths)
 {
     Console.WriteLine($"\n{Path.GetFileName(filePath)}");
 
-    // Use new method to get col span
-    (List<SubawardReader.Models.SubawardRow> rows, List<string> totalColumnOrder, int totalHeaderRowSpan, int totalHeaderColSpan) = parser.ParseWithColumnOrderWithRowSpanAndColSpan(filePath);
+    var result = SubawardReader.Parsing.SubawardParser.ParseWithMetadata(filePath);
 
-    // Output number and names of Total columns
-    Console.WriteLine($"  'Total' header column span (merged only): {totalHeaderColSpan}");
-
-    if (rows.Count == 0)
+    if (result.Rows.Count == 0)
     {
         Console.WriteLine("  No subaward rows found.");
         continue;
     }
 
-    // If a merged 'Total' header is detected, extract its range and span.
-    bool useMergedTotal = totalHeaderColSpan > 1;
-    int headerRowNumber = 0;
-    int totalHeaderColStart = 0;
-    int totalHeaderColEnd = 0;
-    if (useMergedTotal)
+    // Output logic based on merged or single Total header
+    if (result.IsMergedTotalHeader && result.Subheadings != null)
     {
-        (int hdrRow, int colStart, int colEnd, int colSpan, string debugInfo) = SubawardReader.Parsing.TotalHeaderHelper.GetMergedTotalHeaderInfo(filePath);
-        headerRowNumber = hdrRow;
-        totalHeaderColStart = colStart;
-        totalHeaderColEnd = colEnd;
-        Console.WriteLine($"    {debugInfo}");
-        if (headerRowNumber == 0 || totalHeaderColStart == 0)
+        foreach (var row in result.Rows)
         {
-            Console.WriteLine("    Error: Could not determine merged 'Total' header range. The header row or column start is invalid.");
-        }
-    }
-
-    // Output subaward row data, using subheadings if merged header is present.
-    foreach (var row in rows)
-    {
-        Console.WriteLine($"  {row.RecipientName}");
-        if (useMergedTotal && headerRowNumber > 0 && totalHeaderColStart > 0)
-        {
-            var worksheet = new ClosedXML.Excel.XLWorkbook(filePath).Worksheets.First();
-            var (amounts, subheadings) = SubawardReader.Parsing.SubawardParser.ExtractAmountsWithSubheadings(
-                worksheet,
-                worksheet.CellsUsed().First(c => c.GetString().Contains(row.RecipientName)).Address.RowNumber,
-                headerRowNumber,
-                totalHeaderColStart,
-                totalHeaderColSpan);
-            foreach (var subheading in subheadings)
+            Console.WriteLine($"  {row.RecipientName}");
+            foreach (var subheading in result.Subheadings)
             {
                 decimal value = 0;
-                if (!amounts.TryGetValue(subheading, out value))
+                if (!row.Amounts.TryGetValue(subheading, out value))
                 {
                     value = 0;
                 }
                 Console.WriteLine($"    {subheading}: {value}");
             }
         }
-        else
+    }
+    else if (result.TotalColumnOrder.Count == 1)
+    {
+        string colName = result.TotalColumnOrder[0];
+        foreach (var row in result.Rows)
         {
-            foreach (var colName in totalColumnOrder)
+            decimal value = 0;
+            if (!row.Amounts.TryGetValue(colName, out value))
             {
-                string output;
-                if (row.Amounts.TryGetValue(colName, out var value))
+                value = 0;
+            }
+            Console.WriteLine($"  {row.RecipientName}: {value}");
+        }
+    }
+    else
+    {
+        foreach (var row in result.Rows)
+        {
+            Console.WriteLine($"  {row.RecipientName}");
+            foreach (var colName in result.TotalColumnOrder)
+            {
+                decimal value = 0;
+                if (!row.Amounts.TryGetValue(colName, out value))
                 {
-                    output = value.ToString();
+                    value = 0;
                 }
-                else
-                {
-                    output = "0";
-                }
-                Console.WriteLine($"    {colName}: {output}");
+                Console.WriteLine($"    {colName}: {value}");
             }
         }
     }
