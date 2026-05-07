@@ -9,10 +9,10 @@ Goal: Extract subaward rows from each workbook correctly.
 - [x] Select only the specified `.xlsx` file when file mode is used
 - [x] Open first worksheet per workbook
 - [x] Discover `Total` column dynamically by scanning headers
-- [ ] Locate `G.` section start by matching column A `G.` with adjacent column B `Other Direct Costs`
-- [ ] Detect rows in column B where text starts with `Subaward:`
-- [ ] Parse recipient name from adjacent column C on the same row
-- [ ] Parse amount from the same row in the discovered `Total` column
+- [x] Locate `G.` section start by matching column A `G.` with adjacent column B `Other Direct Costs`
+- [x] Detect rows in column B where text starts with `Subaward:`
+- [x] Parse recipient name from adjacent column C on the same row
+- [x] Parse amount from the same row in the discovered `Total` column
 
 ## Implementation Notes
 
@@ -86,3 +86,11 @@ Coverage tooling added to `SubawardReader.Tests/`:
 ## Exit Criteria
 
 - [ ] Parser returns expected extracted rows for all example files
+
+## Lessons Learned / Edge Cases (Gate 3)
+
+- Header row and anchor row structure varies between files; robust anchor detection is critical.
+- False anchors (e.g., 'A.' in column 1 but not 'Senior Personnel' in column 2) must be detected and rejected.
+- Case and whitespace variations in anchors and headers are common; parser must trim and compare case-insensitively.
+- All error output should go through a single helper (WriteError) for clarity and maintainability.
+- Unit tests must cover all known edge cases, including missing anchors, missing headers, and false positives.

@@ -30,6 +30,11 @@ All completion times use local offset format: `YYYY-MM-DD HH:MM (UTC±HH:MM)`.
 ## Thursday (Finish and Submit)
 
 - 10:00-12:30: Gate 4 (Aggregation and Ordering)
+  - Completed at: 2026-05-07 15:30 (UTC-05:00)
+  - Parser and data model updated to handle multi-column "Total" headers and extract all subheading/value pairs.
+  - Recipient extraction logic enhanced to support both same-cell and adjacent-cell formats for "Subaward:" rows.
+  - Output now lists all subaward rows as found, with no aggregation, and preserves row order.
+
 - 2:00-4:30: Gate 5 (Console UX and Error Handling)
 - 6:00-8:00: Gate 6 + Gate 7 + Gate 8 closeout and submit
 

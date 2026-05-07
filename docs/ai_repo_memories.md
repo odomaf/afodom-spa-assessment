@@ -91,3 +91,14 @@ Reason: Capture parser design rule surfaced during Interview Lens review.
 Changes:
 
 - Add rule: keep `Parse` as a thin orchestrator as Gate 3 row-iteration logic is added; extract helpers rather than accumulating inline logic.
+
+### 2026-05-07 (backup)
+
+Backed up planned unit test updates for Gate 4 coverage:
+
+- Add new test: recipient extraction from same-cell format ("Subaward: Example University" in column B).
+- Add new test: recipient extraction from adjacent-cell format ("Subaward:" in column B, recipient in column C).
+- Add new test: extraction of all subheading/value pairs when "Total" spans multiple columns.
+- Update or add test: error output is user-friendly and non-technical.
+
+No existing test covers the adjacent-cell recipient extraction scenario; must be a new test.

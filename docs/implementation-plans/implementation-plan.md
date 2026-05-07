@@ -84,17 +84,23 @@ Completed at: 2026-05-06 20:15 (UTC-05:00)
 
 ## Gate 4: Aggregation and Ordering
 
-Goal: Produce final summary totals and deterministic ordering.
+Goal: Produce a list of all subaward rows as found, with deterministic ordering (no aggregation by recipient).
 
 Checklist:
 
-- [ ] Aggregate totals by recipient across all files.
-- [ ] Preserve first-appearance ordering for summary output.
-- [ ] Preserve row order in per-file sections.
+- [x] List each subaward row exactly as found in the source files.
+- [x] Preserve first-appearance ordering for summary output.
+- [x] Preserve row order in per-file sections.
+- [x] Update parser to extract recipient from same or adjacent cell as "Subaward:" in column B.
+- [x] Output all subheading/value pairs for each subaward row.
 
 Exit criteria:
 
-- [ ] Verify summary totals match manual checks for sample data.
+- [x] Verify output matches the subaward rows and totals as shown in the Excel documents, with no aggregation.
+- [x] Validate parser against sample spreadsheets with merged or multi-column totals and recipient in same/adjacent cell.
+
+Gate status: Completed
+Completed at: 2026-05-07 15:30 (UTC-05:00)
 
 ## Gate 5: Console UX and Error Handling
 
