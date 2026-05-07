@@ -1,6 +1,6 @@
 # Questions and Assumptions
 
-This document records questions that arose during development and the assumptions I made in the absence of explicit requirements. These are questions I would have clarified with the stakeholder on a real engagement.
+This document records questions that arose during development and the assumptions made in the absence of explicit requirements. These are questions to clarify with the stakeholder on a real engagement.
 
 ---
 
@@ -20,7 +20,7 @@ A (assumption): The data is always on the first sheet. The sheet name may differ
 ---
 
 **Q: How are subaward rows identified in the spreadsheet?**
-A (assumption): A row is treated as a subaward entry if the value in column A starts with "Subaward:" (case-insensitive). The recipient name is the text following that prefix, trimmed of whitespace.
+A (assumption): First locate the `G.` section anchor in column A and confirm the adjacent cell in column B is `Other Direct Costs`. From that section onward, treat a row as a subaward entry if column B starts with `Subaward:` (case-insensitive). Read the recipient name from the adjacent column C cell on the same row.
 
 ---
 
@@ -30,7 +30,7 @@ A (assumption): Yes. Every file processed is listed in the output, even if it co
 ---
 
 **Q: How should the final summary list be sorted?**
-A (assumption): Two reasonable options exist: alphabetical by name, or in order of first appearance across the files. I chose order of first appearance so non-technical staff can cross-reference the summary against the source files without needing to search for a name.
+A (assumption): Two reasonable options exist: alphabetical by name, or in order of first appearance across the files. Use order of first appearance so non-technical staff can cross-reference the summary against the source files without needing to search for a name.
 
 ---
 
@@ -40,7 +40,7 @@ A (assumption): Only `.xlsx` files are processed. Other file types are silently 
 ---
 
 **Q: Which row is the header row containing column labels like "Total"?**
-A (assumption): The header row is not at a fixed row number and varies across files. I locate it by scanning column 1 for a cell with the value `"A."`, confirmed by `"Senior Personnel"` in column 2 of the same row. The header row is the row immediately above that anchor row. This two-column match is used to minimize false positives, since `"A."` alone could appear elsewhere in the spreadsheet.
+A (assumption): The header row is not at a fixed row number and varies across files. Locate it by scanning column 1 for a cell with the value `"A."`, confirmed by `"Senior Personnel"` in column 2 of the same row. The header row is the row immediately above that anchor row. Use this two-column match to minimize false positives, since `"A."` alone could appear elsewhere in the spreadsheet.
 
 ---
 

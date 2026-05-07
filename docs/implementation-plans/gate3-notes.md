@@ -9,8 +9,9 @@ Goal: Extract subaward rows from each workbook correctly.
 - [x] Select only the specified `.xlsx` file when file mode is used
 - [x] Open first worksheet per workbook
 - [x] Discover `Total` column dynamically by scanning headers
-- [ ] Detect rows where column A starts with `Subaward:`
-- [ ] Parse recipient name from the same cell text
+- [ ] Locate `G.` section start by matching column A `G.` with adjacent column B `Other Direct Costs`
+- [ ] Detect rows in column B where text starts with `Subaward:`
+- [ ] Parse recipient name from adjacent column C on the same row
 - [ ] Parse amount from the same row in the discovered `Total` column
 
 ## Implementation Notes
@@ -70,9 +71,17 @@ Coverage tooling added to `SubawardReader.Tests/`:
 
 ### Detect Subaward rows
 
+- Start scanning from the section anchored by column A `G.` and adjacent column B `Other Direct Costs`.
+- Treat a row as a subaward entry when column B starts with `Subaward:` (case-insensitive).
+
 ### Parse recipient name
 
+- Read recipient name from adjacent column C on the same row as the `Subaward:` marker.
+
 ### Parse amount
+
+- Read amount from the discovered `Total` column on the same row.
+- Use `questions-and-assumptions.md` as the source of truth for layout assumptions.
 
 ## Exit Criteria
 
