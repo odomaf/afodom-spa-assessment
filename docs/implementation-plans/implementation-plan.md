@@ -70,13 +70,17 @@ Checklist:
 - [x] Select only the specified `.xlsx` file when file mode is used.
 - [x] Open first worksheet per workbook.
 - [x] Discover `Total` column dynamically by scanning headers.
-- [ ] Detect rows where column A starts with `Subaward:`.
-- [ ] Parse recipient name from the same cell text.
-- [ ] Parse amount from the same row in the discovered `Total` column.
+- [x] Locate `G.` section start by matching column A `G.` with adjacent column B `Other Direct Costs`.
+- [x] Detect rows in column B where text starts with `Subaward:`.
+- [x] Parse recipient name from adjacent column C on the same row.
+- [x] Parse amount from the same row in the discovered `Total` column.
 
 Exit criteria:
 
-- [ ] Verify the parser returns expected extracted rows for all example files.
+- [x] Verify the parser returns expected extracted rows for all example files.
+
+Gate status: Completed
+Completed at: 2026-05-06 20:15 (UTC-05:00)
 
 ## Gate 4: Aggregation and Ordering
 
