@@ -1,3 +1,14 @@
+# 2026-05-07 (refactor plan)
+
+- Create a TotalHeaderInfo struct/class to encapsulate all header-related values (row, col start/end, col span, debug info).
+- Refactor SubawardParser.ParseWithColumnOrderWithRowSpanAndColSpan to return a result object containing:
+	- List of SubawardRow
+	- TotalHeaderInfo
+	- List of subheadings (if needed)
+- Centralize all logic for extracting subaward row amounts and subheadings into SubawardParser (or a helper).
+- Update Program.cs to use the result object, removing manual header variable management.
+- Add XML comments and use clear, consistent naming for all new types and methods.
+
 # AI Repo Memories
 
 This file stores backup copies of repo-specific AI memory instructions for afodom-spa-assessment.

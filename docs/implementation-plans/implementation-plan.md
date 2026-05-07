@@ -108,17 +108,22 @@ Goal: Make output readable and resilient for non-technical reviewers.
 
 Checklist:
 
-- [ ] Print clear per-file section (file name + subrecipient names).
-- [ ] Print final summary section (recipient + total amount).
+- [x] Print clear per-file section (file name + subrecipient names).
 - [ ] Format currency clearly (for example, `$#,##0.00`).
-- [ ] Show file with zero subawards as processed.
-- [ ] Handle invalid input path with clear message.
-- [ ] Handle missing `Total` column with clear file-level error.
-- [ ] Handle malformed amount cells defensively.
+- [x] If the total is empty for a row, display $0 so the user knows the row was processed.
+- [ ] Consider using color in output to facilitate easy comprehension (e.g., highlight errors, totals, or important values).
+- [x] Show file with zero subawards as processed.
+- [x] Handle invalid input path with clear message.
+- [x] Handle missing `Total` column with clear file-level error.
+- [x] Handle malformed amount cells defensively.
 
 Exit criteria:
 
 - [ ] Ensure the app completes with readable output and actionable errors.
+
+Summary: Console output and error handling are mostly complete and meet requirements for non-technical users. Remaining work includes currency formatting, color output, and final review of all output for clarity.
+
+Gate status: In Progress
 
 ## Gate 6: Tests
 
