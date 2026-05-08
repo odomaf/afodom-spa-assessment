@@ -22,12 +22,12 @@ A (assumption): The data is always on the first sheet. The sheet name may differ
 **Q: Which column contains the total subaward amount?**
 A (assumption): The Total column is not assumed to be at a fixed index. The application locates it dynamically by scanning the header row for a cell whose value contains "Total" (case-insensitive).
 
- ---
+---
 
 **Q: Which row is the header row containing column labels like "Total"?**
 A (assumption): The header row is not at a fixed row number and varies across files. Locate it by scanning column 1 for a cell with the value `"A."`, confirmed by `"Senior Personnel"` in column 2 of the same row. The header row is the row immediately above that anchor row. Use this two-column match to minimize false positives, since `"A."` alone could appear elsewhere in the spreadsheet.
 
- ---
+---
 
 **Q: What if the 'Total' header spans multiple columns or is not directly above the anchor row?**
 A (assumption): The application searches both the row directly above the anchor row and the row above that for a cell containing "Total" (case-insensitive). If "Total" spans multiple columns (e.g., with subheadings like "Sponsor Share" and "Cost Share"), all such columns are identified and extracted for each subaward row. The output includes both the subheading and the value for clarity.
