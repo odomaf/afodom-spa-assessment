@@ -61,6 +61,8 @@ Completed at: 2026-05-06 10:46 (UTC-05:00)
 
 ## Gate 3: Parsing Implementation
 
+See details in [gate3-notes.md](gate3-notes.md)
+
 Goal: Extract subaward rows from each workbook correctly.
 
 Checklist:
@@ -84,6 +86,8 @@ Completed at: 2026-05-06 20:15 (UTC-05:00)
 
 ## Gate 4: Subaward Row Extraction and Ordering
 
+See details in [gate4-notes.md](gate4-notes.md)
+
 Goal: Extract and list each subaward row exactly as found in the source files, with deterministic ordering (no aggregation by recipient).
 
 Checklist:
@@ -104,28 +108,35 @@ Completed at: 2026-05-07 15:30 (UTC-05:00)
 
 ## Gate 5: Console UX and Error Handling
 
+See details in [gate5-notes.md](gate5-notes.md)
+
 Goal: Make output readable and resilient for non-technical reviewers.
 
 Checklist:
 
 - [x] Print clear per-file section (file name + subrecipient names).
-- [ ] Format currency clearly (for example, `$#,##0.00`).
+- [x] Format currency clearly (for example, `$#,##0.00`).
 - [x] If the total is empty for a row, display $0 so the user knows the row was processed.
-- [ ] Consider using color in output to facilitate easy comprehension (e.g., highlight errors, totals, or important values).
+- [x] Consider using color in output to facilitate easy comprehension (e.g., highlight errors, totals, or important values).
 - [x] Show file with zero subawards as processed.
 - [x] Handle invalid input path with clear message.
 - [x] Handle missing `Total` column with clear file-level error.
 - [x] Handle malformed amount cells defensively.
 
+Implementation Notes: - All output formatting and error messages are now routed through ConsoleFormatter, which uses Spectre.Console for consistent color and style conventions: - Filenames: yellow - Recipient names: bold - Money values: green - Errors: red - "No subaward rows found": gray
+
 Exit criteria:
 
-- [ ] Ensure the app completes with readable output and actionable errors.
+- [x] Ensure the app completes with readable output and actionable errors.
 
-Summary: Console output and error handling are mostly complete and meet requirements for non-technical users. Remaining work includes currency formatting, color output, and final review of all output for clarity.
+Summary: Console output and error handling are complete and meet requirements for non-technical users. All formatting, error handling, and color conventions are implemented and documented. Gate 5 is fully complete.
 
-Gate status: In Progress
+Gate status: Completed
+Completed at: 2026-05-07
 
 ## Gate 6: Tests
+
+See details in [gate6-notes.md](gate6-notes.md)
 
 Goal: Validate required behavior with automated tests.
 
@@ -139,6 +150,24 @@ Checklist:
 Exit criteria:
 
 - [ ] Run all tests and confirm they pass locally.
+
+## Gate 6.5: Final Interview Lens Review and Updates
+
+Goal: Ensure the codebase is interview-ready and meets clarity, maintainability, and best-practice standards.
+
+Checklist:
+
+- [ ] Perform a full Interview Lens review of the codebase.
+- [ ] Add or improve comments for junior clarity where needed.
+- [ ] Refactor any large or complex methods for readability.
+- [ ] Replace magic strings with constants or enums where appropriate.
+- [ ] Add or update test comments to clarify intent.
+- [ ] Address any weak signals or recommendations from the review.
+
+Exit criteria:
+
+- [ ] All Interview Lens recommendations are addressed or documented as deferred.
+- [ ] Codebase is ready for final documentation and reviewer handoff.
 
 ## Gate 7: Documentation
 

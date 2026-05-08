@@ -7,15 +7,23 @@ Goal: Make output readable and resilient for non-technical reviewers.
 ## Checklist
 
 - [x] Print clear per-file section (file name + subrecipient names).
-- [ ] Format currency clearly (for example, `$#,##0.00`).
+- [x] Format currency clearly (for example, `$#,##0.00`).
 - [x] If the total is empty for a row, display $0 so the user knows the row was processed.
-- [ ] Consider using color in output to facilitate easy comprehension (e.g., highlight errors, totals, or important values).
+- [x] Consider using color in output to facilitate easy comprehension (e.g., highlight errors, totals, or important values).
 - [x] Show file with zero subawards as processed.
 - [x] Handle invalid input path with clear message.
 - [x] Handle missing `Total` column with clear file-level error.
 - [x] Handle malformed amount cells defensively.
 
 ## Implementation Notes
+
+    - Output formatting conventions:
+    	- Filenames: yellow
+    	- Recipient names: bold
+    	- Money values: green
+    	- Errors: red
+    	- "No subaward rows found": gray
+    - All formatting is handled by ConsoleFormatter for maintainability and clarity.
 
 - Output is visually clear, with per-file sections and subaward rows easy to distinguish.
 - Amounts display as $0 for empty or missing totals; currency formatting is planned but not yet implemented.
