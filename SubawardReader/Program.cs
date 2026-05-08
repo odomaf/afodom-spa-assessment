@@ -13,10 +13,17 @@ if (args.Length == 0)
 }
 
 
+
 string input = args[0];
-if (!Path.IsPathRooted(input))
+// Accept both relative and absolute paths; resolve to absolute
+string resolvedInput;
+try
 {
-    ConsoleFormatter.PrintError($"Input path '{input}' is not a full path. Please provide the complete path starting with a drive letter, such as C:\\path\\to\\folder.");
+    resolvedInput = Path.GetFullPath(input);
+}
+catch (Exception ex)
+{
+    ConsoleFormatter.PrintError($"Input path '{input}' is invalid: {ex.Message}");
     return 1;
 }
 
@@ -24,22 +31,22 @@ if (!Path.IsPathRooted(input))
 // Iterate over each .xlsx file and process subaward data.
 IEnumerable<string> filePaths;
 
-if (Directory.Exists(input))
+if (Directory.Exists(resolvedInput))
 {
-    filePaths = Directory.EnumerateFiles(input, "*.xlsx");
+    filePaths = Directory.EnumerateFiles(resolvedInput, "*.xlsx");
 }
-else if (File.Exists(input))
+else if (File.Exists(resolvedInput))
 {
-    if (!input.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+    if (!resolvedInput.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
     {
-        ConsoleFormatter.PrintError($"'{input}' is not a supported file type. Please provide an .xlsx file or a folder containing .xlsx files.");
+        ConsoleFormatter.PrintError($"'{resolvedInput}' is not a supported file type. Please provide an .xlsx file or a folder containing .xlsx files.");
         return 1;
     }
-    filePaths = new[] { input };
+    filePaths = new[] { resolvedInput };
 }
 else
 {
-    ConsoleFormatter.PrintError($"Could not find '{input}'. Please check the path and try again.");
+    ConsoleFormatter.PrintError($"Could not find '{resolvedInput}'. Please check the path and try again.");
     return 1;
 }
 
