@@ -27,11 +27,21 @@ Assessment project for UIUC SPA.
    ```
 
 3. **Run the application**
-   - To process all `.xlsx` files in a folder:
+   - To process all `.xlsx` files in the provided test data folder:
+     ```bash
+     dotnet run --project SubawardReader "%CD%\data"
+     ```
+   - To process all `.xlsx` files in a custom folder:
+
      ```bash
      dotnet run --project SubawardReader "C:\full\path\to\data"
      ```
-   - To process a single file:
+
+   - To process a single file in the provided test data folder:
+     ```bash
+     dotnet run --project SubawardReader "%CD%\data\SubawardBudgetExample1.xlsx"
+     ```
+   - To process a single file in a custom folder:
      ```bash
      dotnet run --project SubawardReader "C:\full\path\to\data\SubawardBudgetExample1.xlsx"
      ```
@@ -47,11 +57,14 @@ Assessment project for UIUC SPA.
    ```
 
    - Includes a test that confirms SubawardBudgetExample1.xlsx contains exactly ‘Indiana’, ‘Mayo’, ‘Purdue’, and ‘Florida’ as subrecipients, as required.
+
    - To view coverage (requires bash and ReportGenerator):
      ```bash
      cd SubawardReader.Tests
      ./coverage-report.sh
      ```
+
+   > Note: Some parsing methods have elevated CRAP scores due to necessary complexity and deadline-driven deferral of refactoring. See [Future Improvements](docs/implementation-plans/implementation-plan.md#future-improvements-recommended-but-not-required-for-submission) for details on planned code cleanup.
 
 ## Project Structure
 
