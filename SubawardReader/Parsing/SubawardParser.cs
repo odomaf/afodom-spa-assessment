@@ -98,51 +98,58 @@ namespace SubawardReader.Parsing
                 string fileName = Path.GetFileName(filePath);
                 int gSectionRowNumber = FindGSectionRowNumber(worksheet);
 
-                // Column B: subaward marker labels
                 foreach (var cell in worksheet.Column(2).CellsUsed())
                 {
                     if (cell.Address.RowNumber <= headerRowNumber)
                         continue;
-
                     if (cell.Address.RowNumber < gSectionRowNumber)
                         continue;
 
-                    string cellText = cell.GetString();
-                    if (!cellText.StartsWith("Subaward:", StringComparison.OrdinalIgnoreCase))
+                    if (!IsRecipientRow(cell, worksheet))
                         continue;
 
-                    // Prefer extracting recipient from the same cell as 'Subaward:' for newer formats.
-                    // Fallback to adjacent cell (column C) for legacy or alternate formats.
-                    string recipientName = cell.GetString().Substring("Subaward:".Length).Trim();
-                    if (string.IsNullOrWhiteSpace(recipientName))
-                    {
-                        recipientName = worksheet.Cell(cell.Address.RowNumber, 3).GetString().Trim();
-                    }
+                    string recipientName = ExtractRecipientName(cell, worksheet);
                     if (string.IsNullOrWhiteSpace(recipientName))
                         continue;
 
                     var amounts = new Dictionary<string, decimal>();
-			foreach (var kvp in totalColumns)
-			{
-				int col = kvp.Key;
-				string heading = kvp.Value;
-				decimal value = 0;
-				var amountCell = worksheet.Cell(cell.Address.RowNumber, col);
-				string cellRaw = amountCell.GetString();
-				if (amountCell.DataType == XLDataType.Number || decimal.TryParse(cellRaw, out value))
-				{
-					value = amountCell.GetValue<decimal>();
-				}
-				// Always add the column, using 0 for missing/invalid values
-				amounts[heading] = value;
-			}
+                    foreach (var kvp in totalColumns)
+                    {
+                        int col = kvp.Key;
+                        string heading = kvp.Value;
+                        decimal value = 0;
+                        var amountCell = worksheet.Cell(cell.Address.RowNumber, col);
+                        string cellRaw = amountCell.GetString();
+                        if (amountCell.DataType == XLDataType.Number || decimal.TryParse(cellRaw, out value))
+                        {
+                            value = amountCell.GetValue<decimal>();
+                        }
+                        amounts[heading] = value;
+                    }
 
-                    // Only skip if all amounts are zero (no data in any total column)
                     if (amounts.Values.All(v => v == 0))
                         continue;
 
                     yield return new SubawardRow(fileName, recipientName, amounts);
                 }
+            }
+
+            // Determines if a worksheet cell marks the start of a recipient row ("Subaward:" in column B)
+            private static bool IsRecipientRow(IXLCell cell, IXLWorksheet worksheet)
+            {
+                string cellText = cell.GetString();
+                return cellText.StartsWith("Subaward:", StringComparison.OrdinalIgnoreCase);
+            }
+
+            // Extracts the recipient name from a recipient row, handling both same-cell and adjacent-cell formats
+            private static string ExtractRecipientName(IXLCell cell, IXLWorksheet worksheet)
+            {
+                string recipientName = cell.GetString().Substring("Subaward:".Length).Trim();
+                if (string.IsNullOrWhiteSpace(recipientName))
+                {
+                    recipientName = worksheet.Cell(cell.Address.RowNumber, 3).GetString().Trim();
+                }
+                return recipientName;
             }
 
             private static int FindGSectionRowNumber(IXLWorksheet worksheet)
