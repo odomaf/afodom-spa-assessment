@@ -30,25 +30,6 @@ Assessment project for UIUC Sponsored Programs Administration (SPA).
 
 3. **Run the application**
 
-   **PowerShell/Windows:**
-   - To process all `.xlsx` files in the provided test data folder:
-     ```powershell
-     dotnet run --project SubawardReader .\data
-     ```
-   - To process all `.xlsx` files in a custom folder:
-     ```powershell
-     dotnet run --project SubawardReader C:\full\path\to\data
-     ```
-   - To process a single file in the provided test data folder:
-     ```powershell
-     dotnet run --project SubawardReader .\data\SubawardBudgetExample1.xlsx
-     ```
-   - To process a single file in a custom folder:
-     ```powershell
-     dotnet run --project SubawardReader C:\full\path\to\data\SubawardBudgetExample1.xlsx
-     ```
-
-   **bash/cross-platform:**
    - To process all `.xlsx` files in the provided test data folder:
      ```bash
      dotnet run --project SubawardReader ./data
