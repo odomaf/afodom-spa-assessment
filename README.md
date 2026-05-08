@@ -47,7 +47,7 @@ Assessment project for UIUC Sponsored Programs Administration (SPA).
      dotnet run --project SubawardReader /full/path/to/data/SubawardBudgetExample1.xlsx
      ```
 
-   > Input path must be a full path or a valid relative path from the repo root.
+  > Input path can be a full path or a relative path from your current directory or the repo root. Both are accepted and resolved automatically.
 
    After listing subrecipients per file, the app outputs a summary of all unique subrecipients and their total subaward amounts across all files, as required.
 
