@@ -134,6 +134,7 @@ Summary: Console output and error handling are complete and meet requirements fo
 Gate status: Completed
 Completed at: 2026-05-07
 
+
 ## Gate 6: Tests
 
 See details in [gate6-notes.md](gate6-notes.md)
@@ -142,14 +143,19 @@ Goal: Validate required behavior with automated tests.
 
 Checklist:
 
-- [ ] Add required test: `SubawardBudgetExample1.xlsx` contains Indiana, Mayo, Purdue, Florida.
-- [ ] Add parser tests for `Subaward:` detection and recipient extraction.
-- [ ] Add test for dynamic `Total` column detection.
-- [ ] Add aggregation test for totals and first-appearance order.
+- [x] Add required test: `SubawardBudgetExample1.xlsx` contains Indiana, Mayo, Purdue, Florida.
+- [x] Add parser tests for `Subaward:` detection and recipient extraction.
+- [x] Add test for dynamic `Total` column detection.
+- [x] Add aggregation test for totals and first-appearance order.
 
 Exit criteria:
 
-- [ ] Run all tests and confirm they pass locally.
+- [x] Run all tests and confirm they pass locally.
+
+Gate status: Completed
+Completed at: 2026-05-07
+Rationale: See [gate6-notes.md](gate6-notes.md) for validation details and lessons learned.
+
 
 ## Gate 6.5: Final Interview Lens Review and Updates
 
@@ -157,17 +163,23 @@ Goal: Ensure the codebase is interview-ready and meets clarity, maintainability,
 
 Checklist:
 
-- [ ] Perform a full Interview Lens review of the codebase.
-- [ ] Add or improve comments for junior clarity where needed.
-- [ ] Refactor any large or complex methods for readability.
-- [ ] Replace magic strings with constants or enums where appropriate.
-- [ ] Add or update test comments to clarify intent.
-- [ ] Address any weak signals or recommendations from the review.
+- [x] Perform a full Interview Lens review of the codebase.
+- [x] Add or improve comments for junior clarity where needed.
+- [x] Refactor any large or complex methods for readability (deferred items tracked in Future Improvements).
+- [x] Replace magic strings with constants or enums where appropriate (deferred items tracked in Future Improvements).
+- [x] Add or update test comments to clarify intent.
+- [x] Address any weak signals or recommendations from the review (deferred items tracked in Future Improvements).
 
 Exit criteria:
 
-- [ ] All Interview Lens recommendations are addressed or documented as deferred.
-- [ ] Codebase is ready for final documentation and reviewer handoff.
+- [x] All Interview Lens recommendations are addressed or documented as deferred.
+- [x] Codebase is ready for final documentation and reviewer handoff.
+
+Gate status: Completed
+Completed at: 2026-05-07
+Rationale: See [gate6.5-notes.md](gate6.5-notes.md) for review details and deferred improvements.
+
+
 
 ## Gate 7: Documentation
 
@@ -175,13 +187,17 @@ Goal: Make repo pull-and-run ready for reviewers.
 
 Checklist:
 
-- [ ] Update `README.md` with prerequisites, run command, and test command.
-- [ ] Reference `docs/questions-and-assumptions.md` from README.
-- [ ] Document key implementation choices and known limitations.
+- [x] Update `README.md` with prerequisites, run command, and test command.
+- [x] Reference `docs/questions-and-assumptions.md` from README.
+- [x] Document key implementation choices and known limitations.
 
 Exit criteria:
 
 - [ ] Verify a reviewer can clone, run, and test without modification.
+
+Gate status: In Progress
+Rationale: Awaiting live reviewer verification before marking complete.
+
 
 ## Gate 8: Final Verification and Commit
 
@@ -189,25 +205,31 @@ Goal: Verify end-to-end before handoff.
 
 Checklist:
 
-- [ ] Run app against provided `data/` files.
-- [ ] Verify per-file names and final totals.
-- [ ] Run full test suite.
-- [ ] Perform final code readability pass (comments clear, not excessive).
+- [x] Run app against provided `data/` files.
+- [x] Verify per-file names and final totals.
+- [x] Run full test suite.
+- [x] Perform final code readability pass (comments clear, not excessive).
 
 Exit criteria:
 
-- [ ] Run all commands successfully and verify output matches requirements.
+- [x] Run all commands successfully and verify output matches requirements.
+
+Gate status: Completed
+Completed at: 2026-05-07
+Rationale: All verification steps performed and validated for handoff.
+
 
 ## Optional Commit Batching
 
-- [ ] Commit scaffolding and package setup.
-- [ ] Commit parser and aggregation logic.
-- [ ] Commit tests.
-- [ ] Commit documentation.
+- [x] Commit scaffolding and package setup.
+- [x] Commit parser and aggregation logic.
+- [x] Commit tests.
+- [x] Commit documentation.
+
 
 ## Future Improvements (Recommended but not required for submission)
 
-The following improvements are recommended for future maintainability and clarity:
+The following improvements are recommended for future maintainability and clarity. All deferred items from Interview Lens review and Gate 6.5 are tracked here:
 
 - Split up long or complex methods in SubawardParser for readability
 - Add more step-by-step comments in complex parsing logic
