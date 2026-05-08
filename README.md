@@ -1,7 +1,9 @@
-# afodom-spa-assessment
+# SubawardReader: Excel Parsing Assessment for UIUC SPA
 
-Console application for parsing subaward data from Excel files.
-Assessment project for UIUC SPA.
+Console application that extracts and summarizes subaward recipient data from Excel spreadsheets.
+Assessment project for UIUC Sponsored Programs Administration (SPA).
+
+> **Note:** All commands in this README are shown in bash syntax. On Windows, use Git Bash, WSL, or adapt paths for PowerShell/cmd as needed.
 
 ---
 
@@ -27,26 +29,46 @@ Assessment project for UIUC SPA.
    ```
 
 3. **Run the application**
+
+   **PowerShell/Windows:**
    - To process all `.xlsx` files in the provided test data folder:
-     ```bash
-     dotnet run --project SubawardReader "%CD%\data"
+     ```powershell
+     dotnet run --project SubawardReader .\data
      ```
    - To process all `.xlsx` files in a custom folder:
-
-     ```bash
-     dotnet run --project SubawardReader "C:\full\path\to\data"
+     ```powershell
+     dotnet run --project SubawardReader C:\full\path\to\data
+     ```
+   - To process a single file in the provided test data folder:
+     ```powershell
+     dotnet run --project SubawardReader .\data\SubawardBudgetExample1.xlsx
+     ```
+   - To process a single file in a custom folder:
+     ```powershell
+     dotnet run --project SubawardReader C:\full\path\to\data\SubawardBudgetExample1.xlsx
      ```
 
+   **bash/cross-platform:**
+   - To process all `.xlsx` files in the provided test data folder:
+     ```bash
+     dotnet run --project SubawardReader ./data
+     ```
+   - To process all `.xlsx` files in a custom folder:
+     ```bash
+     dotnet run --project SubawardReader /full/path/to/data
+     ```
    - To process a single file in the provided test data folder:
      ```bash
-     dotnet run --project SubawardReader "%CD%\data\SubawardBudgetExample1.xlsx"
+     dotnet run --project SubawardReader ./data/SubawardBudgetExample1.xlsx
      ```
    - To process a single file in a custom folder:
      ```bash
-     dotnet run --project SubawardReader "C:\full\path\to\data\SubawardBudgetExample1.xlsx"
+     dotnet run --project SubawardReader /full/path/to/data/SubawardBudgetExample1.xlsx
      ```
 
-   > Input path must be a full path (not relative).
+   > Input path must be a full path or a valid relative path from the repo root.
+
+   After listing subrecipients per file, the app outputs a summary of all unique subrecipients and their total subaward amounts across all files, as required.
 
    After listing subrecipients per file, the app outputs a summary of all unique subrecipients and their total subaward amounts across all files, as required.
 
