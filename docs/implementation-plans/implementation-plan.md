@@ -204,3 +204,15 @@ Exit criteria:
 - [ ] Commit parser and aggregation logic.
 - [ ] Commit tests.
 - [ ] Commit documentation.
+
+## Future Improvements (Recommended but not required for submission)
+
+The following improvements are recommended for future maintainability and clarity:
+
+- Split up long or complex methods in SubawardParser for readability
+- Add more step-by-step comments in complex parsing logic
+- Replace magic strings (e.g., header names, error messages) with named constants
+- Add regular C# comments above each record in Models if missing
+- Consider parameterized tests ([Theory], InlineData) for similar scenarios
+- Extract repeated logic in parsing helpers into private methods for clarity
+- Add a brief comment at the top of Program.cs explaining top-level statements for juniors

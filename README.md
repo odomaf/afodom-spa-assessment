@@ -1,34 +1,79 @@
 # afodom-spa-assessment
 
-Console application assessment for job app with UIUC SPA
+Console application for parsing subaward data from Excel files.
+Assessment project for UIUC SPA.
 
-## Project Setup Baseline
+---
 
-- Runtime/SDK: .NET 10 x64
-- Solution file: `SubawardReader.slnx`
-- Projects: `SubawardReader`, `SubawardReader.Tests`
-- Added packages:
-  - App: `ClosedXML`
-  - Tests: `xunit.runner.visualstudio`
-- Validation commands run:
+## Prerequisites
 
-```bash
-dotnet restore
-dotnet build
-```
+- .NET 10 SDK (x64) installed ([Download .NET 10](https://dotnet.microsoft.com/download))
+- Windows (recommended/tested), but should work cross-platform
 
-- Result: restore and build succeeded
+## Getting Started
 
-## Gate 4: Subaward Row Extraction and Ordering (2026-05-07)
+1. **Clone the repository**
 
-> **Note:** For all technical and user-facing assumptions, see `docs/questions-and-assumptions.md` (canonical source of truth).
+   ```bash
+   git clone https://github.com/odomaf/afodom-spa-assessment.git
+   cd afodom-spa-assessment
+   ```
 
-- Parser and data model updated to support multi-column "Total" headers and extraction of all subheading/value pairs.
-- Recipient extraction logic now handles both same-cell and adjacent-cell formats for "Subaward:" rows.
-- Output lists all subaward rows as found, with no aggregation, and preserves row order.
-- All documentation and assumptions updated to reflect new logic and user experience requirements.
+2. **Restore and build**
 
-See:
+   ```bash
+   dotnet restore
+   dotnet build
+   ```
 
-- docs/implementation-plans/gate4-notes.md (Gate 4 details)
-- docs/questions-and-assumptions.md (updated assumptions)
+3. **Run the application**
+   - To process all `.xlsx` files in a folder:
+     ```bash
+     dotnet run --project SubawardReader "C:\full\path\to\data"
+     ```
+   - To process a single file:
+     ```bash
+     dotnet run --project SubawardReader "C:\full\path\to\data\SubawardBudgetExample1.xlsx"
+     ```
+
+   > Input path must be a full path (not relative).
+
+   After listing subrecipients per file, the app outputs a summary of all unique subrecipients and their total subaward amounts across all files, as required.
+
+4. **Run tests**
+
+   ```bash
+   dotnet test SubawardReader.Tests
+   ```
+
+   - Includes a test that confirms SubawardBudgetExample1.xlsx contains exactly ‘Indiana’, ‘Mayo’, ‘Purdue’, and ‘Florida’ as subrecipients, as required.
+   - To view coverage (requires bash and ReportGenerator):
+     ```bash
+     cd SubawardReader.Tests
+     ./coverage-report.sh
+     ```
+
+## Project Structure
+
+- `SubawardReader/` — Main console app and parsing logic
+- `SubawardReader.Tests/` — xUnit tests and coverage scripts
+- `data/` — Example Excel files for testing
+- `docs/` — Implementation plans, assumptions, and process documentation
+
+## Key Implementation Notes
+
+- All output and errors are formatted via `ConsoleFormatter` for clarity.
+- Parser supports both single and merged/multi-column “Total” headers.
+- Test suite uses real Excel files for robust validation.
+- See [docs/questions-and-assumptions.md](docs/questions-and-assumptions.md) for all technical/user-facing assumptions.
+
+## Known Limitations
+
+- Only `.xlsx` files are supported.
+- Input path must be absolute.
+- See [docs/implementation-plans/implementation-plan.md](docs/implementation-plans/implementation-plan.md#future-improvements-recommended-but-not-required-for-submission) for deferred improvements.
+
+## Assumptions & Questions
+
+- All technical and user-facing assumptions are documented in [docs/questions-and-assumptions.md](docs/questions-and-assumptions.md).
+- Any questions about ambiguous requirements are also listed there.
